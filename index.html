@@ -60,7 +60,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            cursor: none; /* Custom cursor used */
+            cursor: none;
         }
 
         h1, h2, h3, h4, h5, h6, .font-display {
@@ -184,11 +184,11 @@
 
         .nav-links {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
         }
 
         .nav-links li a {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             position: relative;
@@ -346,7 +346,7 @@
         }
 
         /* ==========================================
-           ABOUT SECTION
+           SECTION HEADERS & ABOUT
            ========================================== */
         .section {
             padding: 150px 0;
@@ -445,7 +445,7 @@
         }
 
         /* ==========================================
-           PROJECTS SECTION (3D Tilt Cards)
+           3D TILT CARDS (Used in Projects & Timeline)
            ========================================== */
         .projects-grid {
             display: grid;
@@ -458,7 +458,7 @@
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 2.5rem;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transform-style: preserve-3d;
@@ -495,7 +495,7 @@
         .project-title {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .project-desc {
@@ -536,6 +536,65 @@
         .project-link:hover {
             color: var(--accent);
             gap: 1rem;
+        }
+
+        /* ==========================================
+           EDUCATION TIMELINE
+           ========================================== */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-left: 2rem;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--accent), var(--glass-border), transparent);
+            border-radius: 2px;
+        }
+
+        .timeline-node {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-node::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .timeline-node:hover::before {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .degree-title {
+            color: var(--accent); 
+            margin-bottom: 1rem; 
+            font-family: 'Inter', sans-serif; 
+            font-weight: 500;
+            font-size: 1.1rem;
         }
 
         /* ==========================================
@@ -741,6 +800,12 @@
             .hero-title {
                 font-size: clamp(3rem, 8vw, 6rem);
             }
+            .timeline-container {
+                padding-left: 1rem;
+            }
+            .timeline-node {
+                padding-left: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -750,7 +815,7 @@
             .section {
                 padding: 100px 0;
             }
-            .project-card {
+            .project-card, .tilt-card {
                 transform: none !important;
             }
         }
@@ -768,7 +833,8 @@
         <ul class="nav-links">
             <li><a href="#about" class="custom-hover">Profile</a></li>
             <li><a href="#projects" class="custom-hover">Systems</a></li>
-            <li><a href="#skills" class="custom-hover">Neural Capabilities</a></li>
+            <li><a href="#education" class="custom-hover">Chronology</a></li>
+            <li><a href="#skills" class="custom-hover">Capabilities</a></li>
         </ul>
         <a href="#contact" class="btn-magnetic custom-hover">Initialize Contact</a>
     </nav>
@@ -895,6 +961,56 @@
         </div>
     </section>
 
+    <section class="section" id="education">
+        <div class="container">
+            <div class="section-header gs-reveal">
+                <span class="section-num">03</span>
+                <h2 class="section-title">Academic Chronology</h2>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-node gs-reveal">
+                    <div class="project-card tilt-card">
+                        <div class="project-year" style="font-size: 4rem; top: -10px;">PRESENT</div>
+                        <div class="project-content">
+                            <h3 class="project-title" style="margin-top: 0;">Indian Institute of Technology (IIT) Jodhpur</h3>
+                            <h4 class="degree-title">Bachelor of Science in Applied AI & Data Science</h4>
+                            <p class="project-desc">Focusing heavily on Artificial Intelligence, Machine Learning, Data Analytics, Statistics, Programming, and Databases. Building the mathematical and algorithmic foundation required for advanced AI research.</p>
+                            <div class="project-tags">
+                                <span>Advanced ML</span>
+                                <span>Neural Networks</span>
+                                <span>Deep Learning</span>
+                                <span>Database Systems</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-node gs-reveal">
+                    <div class="project-card tilt-card">
+                        <div class="project-year" style="font-size: 4rem; top: -10px;">2024</div>
+                        <div class="project-content">
+                            <h3 class="project-title" style="margin-top: 0;">Senior Secondary Education</h3>
+                            <h4 class="degree-title">Intensive Quantitative Problem Solving</h4>
+                            <p class="project-desc">Completed 12th grade with a rigorous focus on Mathematics, Physics, and Chemistry. Executed highly analytical problem-solving modules laying the groundwork for complex data structuring.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-node gs-reveal">
+                    <div class="project-card tilt-card">
+                        <div class="project-year" style="font-size: 4rem; top: -10px;">2022</div>
+                        <div class="project-content">
+                            <h3 class="project-title" style="margin-top: 0;">Secondary Education</h3>
+                            <h4 class="degree-title">Foundational Reasoning Modules</h4>
+                            <p class="project-desc">Completed 10th standard foundational education, developing early competencies in logical reasoning, algorithmic thinking, and core sciences.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section" id="skills" style="padding: 0; overflow: hidden;">
         
         <div class="marquee-container">
@@ -932,7 +1048,7 @@
 
         <div class="container" style="padding-top: 100px;">
             <div class="section-header gs-reveal">
-                <span class="section-num">03</span>
+                <span class="section-num">04</span>
                 <h2 class="section-title">Neural Capabilities</h2>
             </div>
             
@@ -968,7 +1084,7 @@
     <section class="section" id="contact">
         <div class="container">
             <div class="section-header gs-reveal">
-                <span class="section-num">04</span>
+                <span class="section-num">05</span>
                 <h2 class="section-title">Secure Uplink</h2>
             </div>
 
@@ -1322,7 +1438,7 @@
             for(let i = 0; i < particleCount * 3; i+=3) {
                 // Apply a subtle sine wave motion to the Y axis based on X and Time
                 const x = positions[i];
-                // Store original Y in z temporarily or use a fixed calculation (simplified here for performance)
+                // Store original Y in z temporarily or use a fixed calculation
                 positions[i+1] += Math.sin(elapsedTime * 2 + x * 0.01) * 0.2; 
             }
             particlesMesh.geometry.attributes.position.needsUpdate = true;
