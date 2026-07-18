@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karunya Sharma | AI & Data Science Architect</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           RESET & GLOBAL VARIABLES
+           ========================================== */
+        :root {
+            --bg-color: #030305;
+            --text-main: #ffffff;
+            --text-muted: #8892b0;
+            --accent: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --secondary: #7000ff;
+            --glass-bg: rgba(25, 25, 35, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --nav-height: 100px;
+            --container-width: 1400px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: none; /* Custom cursor used */
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* ==========================================
+           CUSTOM CURSOR
+           ========================================== */
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .cursor.hovered {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 1);
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower.hovered {
+            opacity: 0;
+        }
+
+        /* ==========================================
+           3D WEBGL BACKGROUND
+           ========================================== */
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ==========================================
+           NAVIGATION
+           ========================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background: rgba(3, 3, 5, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            height: 80px;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text-main);
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-links li a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-links li a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-magnetic {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-magnetic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-magnetic:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-magnetic:hover {
+            border-color: transparent;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* ==========================================
+           HERO SECTION
+           ========================================== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 2;
+            mix-blend-mode: exclusion;
+        }
+
+        .hero-greeting {
+            font-family: 'Inter', sans-serif;
+            color: var(--accent);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            line-height: 0.9;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .hero-title span {
+            color: var(--text-main);
+            -webkit-text-stroke: 0;
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transform: rotate(-90deg);
+            transform-origin: left center;
+        }
+
+        .scroll-line {
+            width: 60px;
+            height: 1px;
+            background: var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            animation: scrollLine 2s infinite cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes scrollLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ==========================================
+           ABOUT SECTION
+           ========================================== */
+        .section {
+            padding: 150px 0;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 2rem;
+        }
+
+        .section-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--accent);
+            font-weight: 800;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .about-text p strong {
+            color: var(--text-main);
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .stat-item h4 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .about-visual {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, var(--accent-glow), transparent);
+            z-index: 1;
+            mix-blend-mode: overlay;
+        }
+
+        .about-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.2);
+            transition: var(--transition);
+        }
+
+        .about-visual:hover img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+        }
+
+        /* ==========================================
+           PROJECTS SECTION (3D Tilt Cards)
+           ========================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            position: relative;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.1s ease, border-color 0.4s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .project-content {
+            transform: translateZ(30px);
+        }
+
+        .project-year {
+            font-family: 'Syne', sans-serif;
+            font-size: 5rem;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-year {
+            -webkit-text-stroke: 1px var(--accent);
+            transform: translateZ(50px);
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-tags span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            color: var(--accent);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            color: var(--accent);
+            gap: 1rem;
+        }
+
+        /* ==========================================
+           SKILLS MARQUEE & GRID
+           ========================================== */
+        .marquee-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            overflow: hidden;
+            padding: 5rem 0;
+            background: var(--glass-bg);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            transform: rotate(-2deg);
+            position: relative;
+            z-index: 10;
+        }
+
+        .marquee {
+            display: flex;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-item {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0 2rem;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .marquee-item:hover {
+            -webkit-text-stroke: 1px var(--accent);
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        .skill-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .skill-box:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .skill-box:hover::before {
+            opacity: 1;
+        }
+
+        .skill-box p {
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ==========================================
+           CONTACT & FOOTER
+           ========================================== */
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            font-size: 1.5rem;
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+            padding-left: 1rem;
+            border-color: var(--accent);
+        }
+
+        .contact-form {
+            background: var(--glass-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 1rem;
+            left: 0;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label,
+        .input-group textarea:focus ~ label,
+        .input-group textarea:valid ~ label {
+            top: -1.5rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        footer {
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 100px;
+        }
+
+        /* ==========================================
+           RESPONSIVE DESIGN
+           ========================================== */
+        @media (max-width: 1024px) {
+            .about-grid, .contact-wrap {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: clamp(3rem, 8vw, 6rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .section {
+                padding: 100px 0;
+            }
+            .project-card {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div id="webgl-container"></div>
+
+    <nav id="navbar">
+        <a href="#" class="logo custom-hover">KARUNYA<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#about" class="custom-hover">Profile</a></li>
+            <li><a href="#projects" class="custom-hover">Systems</a></li>
+            <li><a href="#skills" class="custom-hover">Neural Capabilities</a></li>
+        </ul>
+        <a href="#contact" class="btn-magnetic custom-hover">Initialize Contact</a>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="container hero-content">
+            <span class="hero-greeting gs-reveal">System Online // Identity Verified</span>
+            <h1 class="hero-title gs-reveal">
+                Applied AI <span>Operator</span> & Data Scientist
+            </h1>
+            <p class="hero-subtitle gs-reveal">
+                Pursuing BS in Applied AI & Data Science at IIT Jodhpur. Architecting intelligent AI applications, decomposing complex datasets, and generating predictive models to synthesize real-world solutions.
+            </p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <div class="scroll-line"></div>
+        </div>
+    </header>
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-header gs-reveal">
+                <span class="section-num">01</span>
+                <h2 class="section-title">Operator Profile</h2>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-text gs-reveal">
+                    <p>My foundation is built on rigorous execution and logical analysis. I don't just use models; I dissect their anatomy to build <strong>practical AI solutions</strong> that transform raw data into <strong>actionable insights</strong>.</p>
+                    <p>Operating out of IIT Jodhpur, my focus remains strictly on bridging the gap between deep machine learning theory and production-ready software deployments, utilizing robust frameworks like TensorFlow and Scikit-learn.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h4>8.75</h4>
+                            <p>Academic CGPA</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>10+</h4>
+                            <p>Core Technologies</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>04</h4>
+                            <p>Deployed Systems</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>∞</h4>
+                            <p>Lines of Data Analyzed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-visual gs-reveal" data-tilt>
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2564&auto=format&fit=crop" alt="Abstract Neural Data">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-header gs-reveal">
+                <span class="section-num">02</span>
+                <h2 class="section-title">Engineered Systems</h2>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card gs-reveal tilt-card">
+                    <div class="project-year">2026</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Pet Recommendation AI</h3>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>Symbolic AI</span>
+                            <span>Rule-Based</span>
+                        </div>
+                        <p class="project-desc">A rigorous rule-based expert system utilizing Forward Chaining logic to recommend optimal pets based on strict user parameter inputs. Demonstrates advanced knowledge representation.</p>
+                        <a href="https://github.com/karunyasharma" target="_blank" class="project-link custom-hover">Access Repository →</a>
+                    </div>
+                </div>
+
+                <div class="project-card gs-reveal tilt-card">
+                    <div class="project-year">2026</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Hand Gesture Recognition</h3>
+                        <div class="project-tags">
+                            <span>TensorFlow</span>
+                            <span>OpenCV</span>
+                            <span>Python</span>
+                        </div>
+                        <p class="project-desc">A low-latency, real-time computer vision pipeline engineered to accurately classify complex hand gestures using convolutional deep learning models.</p>
+                        <a href="https://github.com/karunyasharma" target="_blank" class="project-link custom-hover">Access Repository →</a>
+                    </div>
+                </div>
+
+                <div class="project-card gs-reveal tilt-card">
+                    <div class="project-year">2026</div>
+                    <div class="project-content">
+                        <h3 class="project-title">VidyaVerse ROI Analytics</h3>
+                        <div class="project-tags">
+                            <span>Power BI</span>
+                            <span>Pandas</span>
+                            <span>Excel</span>
+                        </div>
+                        <p class="project-desc">Enterprise-grade marketing analytics dashboard evaluating campaign telemetry, tracking KPIs, and calculating real-time ROI metrics across multiple platform nodes.</p>
+                        <a href="https://github.com/karunyasharma" target="_blank" class="project-link custom-hover">Access Repository →</a>
+                    </div>
+                </div>
+                
+                <div class="project-card gs-reveal tilt-card">
+                    <div class="project-year">2026</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Data Analytics Dashboard</h3>
+                        <div class="project-tags">
+                            <span>Tableau</span>
+                            <span>Power BI</span>
+                            <span>SQL</span>
+                        </div>
+                        <p class="project-desc">Dynamic reporting interfaces constructed for visualizing core business metrics, identifying strict statistical trends, and generating actionable organizational insights.</p>
+                        <a href="https://github.com/karunyasharma" target="_blank" class="project-link custom-hover">Access Repository →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="skills" style="padding: 0; overflow: hidden;">
+        
+        <div class="marquee-container">
+            <div class="marquee">
+                <div class="marquee-content">
+                    <span class="marquee-item">Python</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">TensorFlow</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">Scikit-learn</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">Pandas</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">OpenCV</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">Power BI</span>
+                    <span class="marquee-item">•</span>
+                </div>
+                <div class="marquee-content" aria-hidden="true">
+                    <span class="marquee-item">Python</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">TensorFlow</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">Scikit-learn</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">Pandas</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">OpenCV</span>
+                    <span class="marquee-item">•</span>
+                    <span class="marquee-item">Power BI</span>
+                    <span class="marquee-item">•</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="padding-top: 100px;">
+            <div class="section-header gs-reveal">
+                <span class="section-num">03</span>
+                <h2 class="section-title">Neural Capabilities</h2>
+            </div>
+            
+            <div class="skills-grid gs-reveal">
+                <div class="skill-box custom-hover">
+                    <p>Python / SQL</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>TensorFlow / Keras</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>Machine Learning</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>Computer Vision</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>Data Analytics (EDA)</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>Power BI / Tableau</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>Git / GitHub</p>
+                </div>
+                <div class="skill-box custom-hover">
+                    <p>Mathematical Optimization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-header gs-reveal">
+                <span class="section-num">04</span>
+                <h2 class="section-title">Secure Uplink</h2>
+            </div>
+
+            <div class="contact-wrap">
+                <div class="contact-info gs-reveal">
+                    <h3>Initialize System Comms.</h3>
+                    <p>Currently available for machine learning internships, data science research assignments, and architectural software development. Ready to analyze the data and deploy the solution.</p>
+                    
+                    <div class="social-links">
+                        <a href="mailto:karunyasharma60@gmail.com" class="social-link custom-hover">
+                            karunyasharma60@gmail.com <span>→</span>
+                        </a>
+                        <a href="https://github.com/karunyasharma" target="_blank" class="social-link custom-hover">
+                            GitHub Repository <span>→</span>
+                        </a>
+                        <a href="https://linkedin.com/in/karunyasharma" target="_blank" class="social-link custom-hover">
+                            LinkedIn Network <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form gs-reveal">
+                    <form action="#" method="POST">
+                        <div class="input-group">
+                            <input type="text" id="name" required autocomplete="off">
+                            <label for="name">Operator ID / Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" required autocomplete="off">
+                            <label for="email">Return Node (Email)</label>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="message" rows="4" required autocomplete="off"></textarea>
+                            <label for="message">Transmission Data (Message)</label>
+                        </div>
+                        <button type="submit" class="btn-magnetic custom-hover" style="width: 100%; margin-top: 1rem;">Deploy Transmission</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>"Transforming data into intelligent solutions through Artificial Intelligence and Machine Learning."</p>
+            <p style="margin-top: 10px;">&copy; 2026 Karunya Sharma. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // --------------------------------------------------------
+        // 1. CUSTOM CURSOR LOGIC
+        // --------------------------------------------------------
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        const hoverTargets = document.querySelectorAll('.custom-hover');
+
+        let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Move main cursor instantly
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        // Smooth follow loop for the outline
+        function updateCursor() {
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+            
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+            
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        // Hover states
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovered');
+                follower.classList.add('hovered');
+            });
+            target.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovered');
+                follower.classList.remove('hovered');
+            });
+        });
+
+        // --------------------------------------------------------
+        // 2. LENIS SMOOTH SCROLL
+        // --------------------------------------------------------
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Integration of GSAP and Lenis
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+        gsap.ticker.lagSmoothing(0, 0);
+
+        // --------------------------------------------------------
+        // 3. GSAP ANIMATIONS
+        // --------------------------------------------------------
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar blur on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Hero initial load animation
+        const tl = gsap.timeline();
+        tl.fromTo('.hero-greeting', {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.5})
+          .fromTo('.hero-title', {y: 50, opacity: 0, rotationX: 10}, {y: 0, opacity: 1, rotationX: 0, duration: 1.2, ease: 'power4.out'}, "-=0.6")
+          .fromTo('.hero-subtitle', {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 1, ease: 'power3.out'}, "-=0.8")
+          .fromTo('.scroll-indicator', {opacity: 0}, {opacity: 1, duration: 1}, "-=0.5");
+
+        // Scroll reveals for sections
+        const revealElements = document.querySelectorAll('.gs-reveal');
+        revealElements.forEach((elem) => {
+            gsap.fromTo(elem, 
+                { y: 100, opacity: 0 }, 
+                {
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 1, 
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+
+        // Magnetic Buttons Logic
+        const magneticButtons = document.querySelectorAll('.btn-magnetic');
+        magneticButtons.forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const position = btn.getBoundingClientRect();
+                const x = e.pageX - position.left - position.width / 2;
+                const y = e.pageY - position.top - position.height / 2;
+                
+                gsap.to(btn, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.5,
+                    ease: "power3.out"
+                });
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "power3.out" });
+            });
+        });
+
+        // 3D Tilt Effect for Project Cards
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // --------------------------------------------------------
+        // 4. THREE.JS 3D PARTICLE UNIVERSE BACKGROUND
+        // --------------------------------------------------------
+        const container = document.getElementById('webgl-container');
+        
+        // Scene, Camera, Renderer
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x030305, 0.001); // Matches background color
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.z = 400;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // Create Particles (A premium cyber-dust effect)
+        const particleCount = 2500;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        const color1 = new THREE.Color(0x00f0ff); // Cyan
+        const color2 = new THREE.Color(0x7000ff); // Purple
+        const color3 = new THREE.Color(0xffffff); // White
+
+        for(let i = 0; i < particleCount * 3; i+=3) {
+            // Distribute particles in a wide 3D space
+            positions[i] = (Math.random() - 0.5) * 2000;     // x
+            positions[i+1] = (Math.random() - 0.5) * 2000;   // y
+            positions[i+2] = (Math.random() - 0.5) * 1500;   // z
+
+            // Randomize colors between the three brand colors
+            const mix = Math.random();
+            let selectedColor;
+            if(mix < 0.4) selectedColor = color1;
+            else if (mix < 0.8) selectedColor = color2;
+            else selectedColor = color3;
+
+            colors[i] = selectedColor.r;
+            colors[i+1] = selectedColor.g;
+            colors[i+2] = selectedColor.b;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        // Create a custom circular particle texture programmatically
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const context = canvas.getContext('2d');
+        const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.2, 'rgba(255,255,255,0.8)');
+        gradient.addColorStop(0.5, 'rgba(255,255,255,0.2)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, 32, 32);
+        const particleTexture = new THREE.CanvasTexture(canvas);
+
+        const material = new THREE.PointsMaterial({
+            size: 4,
+            vertexColors: true,
+            map: particleTexture,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+
+        const particlesMesh = new THREE.Points(geometry, material);
+        scene.add(particlesMesh);
+
+        // Add geometric floating objects (Icosahedrons) to add depth
+        const shapes = [];
+        const shapeGeometry = new THREE.IcosahedronGeometry(20, 0);
+        const shapeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00f0ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.15
+        });
+
+        for(let i=0; i<15; i++) {
+            const mesh = new THREE.Mesh(shapeGeometry, shapeMaterial);
+            mesh.position.set(
+                (Math.random() - 0.5) * 1000,
+                (Math.random() - 0.5) * 1000,
+                (Math.random() - 0.5) * 800 - 200
+            );
+            mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+            
+            // Assign random rotation speeds
+            mesh.userData = {
+                rx: (Math.random() - 0.5) * 0.01,
+                ry: (Math.random() - 0.5) * 0.01
+            };
+            
+            scene.add(mesh);
+            shapes.push(mesh);
+        }
+
+        // Mouse interaction logic for 3D environment
+        let targetX = 0;
+        let targetY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            targetX = (event.clientX - windowHalfX) * 0.05;
+            targetY = (event.clientY - windowHalfY) * 0.05;
+        });
+
+        // Scroll interaction logic to move camera through space
+        let scrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+        });
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Parallax effect with mouse
+            camera.position.x += (targetX - camera.position.x) * 0.02;
+            camera.position.y += (-targetY - camera.position.y) * 0.02;
+            
+            // Move camera forward based on scroll position
+            camera.position.z = 400 - (scrollY * 0.2);
+
+            // Gently rotate the entire particle system
+            particlesMesh.rotation.y = elapsedTime * 0.05;
+            particlesMesh.rotation.x = elapsedTime * 0.02;
+
+            // Animate floating shapes
+            shapes.forEach(shape => {
+                shape.rotation.x += shape.userData.rx;
+                shape.rotation.y += shape.userData.ry;
+            });
+
+            // Make particles wave mathematically
+            const positions = particlesMesh.geometry.attributes.position.array;
+            for(let i = 0; i < particleCount * 3; i+=3) {
+                // Apply a subtle sine wave motion to the Y axis based on X and Time
+                const x = positions[i];
+                // Store original Y in z temporarily or use a fixed calculation (simplified here for performance)
+                positions[i+1] += Math.sin(elapsedTime * 2 + x * 0.01) * 0.2; 
+            }
+            particlesMesh.geometry.attributes.position.needsUpdate = true;
+
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle Window Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    </script>
+</body>
+</html>
