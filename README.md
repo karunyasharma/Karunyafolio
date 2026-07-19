@@ -2,7 +2,6 @@
 
 ## 🎥 Portfolio Demo
 
-https://github.com/user-attachments/assets/walkthrough.mp4
 <p align="center">
   <img src="assets/portfolio-preview.gif" alt="Portfolio Preview" width="100%">
 </p>
