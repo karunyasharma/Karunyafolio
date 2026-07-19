@@ -1,6 +1,10 @@
 # 🚀 Karunya Sharma - AI & Data Science Portfolio
 
-![Portfolio Banner](assets/banner.png)
+## 🎥 Portfolio Demo
+
+https://github.com/user-attachments/assets/walkthrough.mp4
+
+> 🎬 Watch a quick walkthrough of my AI & Data Science portfolio.
 
 ## 👋 About Me
 
