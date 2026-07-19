@@ -68,18 +68,13 @@ https://karunyasharma.github.io/Karunyafolio/
 ## 📂 Project Structure
 
 ```
-Portfolio/
+Karunyafolio/
 │
-├── index.html
-├── profile.png
 ├── README.md
-├── assets/
-│   ├── images/
-│   └── icons/
-│
-├── css/
-├── js/
-└── screenshots/
+├── index.html
+├── portfolio-preview.gif
+├── profile.png
+├── google381e2e7bf12ea92f.html
 ```
 
 ---
@@ -147,21 +142,10 @@ Interactive Business Intelligence Dashboard.
 - Tableau
 - Git & GitHub
 
----
-
-## 📷 Screenshots
-
-| Home | Projects |
-|------|----------|
-| ![](screenshots/home.png) | ![](screenshots/projects.png) |
 
 ---
 
 ## 📈 GitHub Stats
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=karunyasharma&show_icons=true&theme=tokyonight)
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=karunyasharma&layout=compact&theme=tokyonight)
 
 ![GitHub Streak](https://streak-stats.demolab.com?user=karunyasharma&theme=tokyonight)
 
