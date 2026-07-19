@@ -3,7 +3,7 @@
 ## 🎥 Portfolio Demo
 
 <p align="center">
-  <img src="assets/portfolio-preview.gif" alt="Portfolio Preview" width="100%">
+  <img src="portfolio-preview.gif" alt="Portfolio Preview" width="100%">
 </p>
 
 > 🎬 Watch a quick walkthrough of my AI & Data Science portfolio.
