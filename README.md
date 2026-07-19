@@ -1,12 +1,12 @@
-# 🚀 Karunya Sharma - AI & Data Science Portfolio
+#  Karunya Sharma - AI & Data Science Portfolio
 
 ## 🎥 Portfolio Demo
-
+🎬 Watch a quick walkthrough of my AI & Data Science portfolio.
 <p align="center">
   <img src="portfolio-preview.gif" alt="Portfolio Preview" width="100%">
 </p>
 
-> 🎬 Watch a quick walkthrough of my AI & Data Science portfolio.
+> 
 
 ## 👋 About Me
 
