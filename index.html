@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karunya Sharma | AI & Data Science Enthusiast</title>
-    
+    <meta name="description" content="Karunya Sharma — Applied AI & Data Science student at IIT Jodhpur. Portfolio of machine learning, computer vision, NLP and data analytics projects.">
+    <meta name="theme-color" content="#030305">
+    <meta property="og:title" content="Karunya Sharma | AI & Data Science Enthusiast">
+    <meta property="og:description" content="Portfolio of machine learning, computer vision, NLP and data analytics projects by Karunya Sharma (IIT Jodhpur).">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23030305'/%3E%3Ctext x='50' y='68' font-size='55' font-family='Arial' font-weight='800' fill='%2300f0ff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -55,6 +61,25 @@
         img { max-width: 100%; display: block; }
         
         .container { max-width: var(--container-width); margin: 0 auto; padding: 0 5%; }
+
+        /* ==========================================
+           ACCESSIBILITY UPGRADES
+           ========================================== */
+        .skip-link {
+            position: fixed; top: -60px; left: 20px; z-index: 1000000;
+            background: var(--accent); color: #000; padding: 0.8rem 1.5rem; border-radius: 8px;
+            font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.85rem;
+            transition: top 0.3s ease;
+        }
+        .skip-link:focus { top: 20px; }
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, .custom-hover:focus-visible {
+            outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+            body { cursor: auto; }
+            .cursor, .cursor-follower { display: none; }
+        }
 
         /* ==========================================
            SCROLL PROGRESS BAR (upgrade)
@@ -211,6 +236,18 @@
         /* ==========================================
            3D TILT CARDS
            ========================================== */
+        .filter-tabs { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+        .filter-btn {
+            padding: 0.7rem 1.6rem; border-radius: 100px; border: 1px solid var(--glass-border);
+            background: transparent; color: var(--text-muted); font-family: 'Inter', sans-serif;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition);
+        }
+        .filter-btn:hover { border-color: var(--accent); color: var(--text-main); }
+        .filter-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
+        .project-card.hidden-card { display: none; }
+
+        .stat-item h4 .stat-suffix { color: var(--accent); }
+
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; }
         .project-card {
             position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border);
@@ -337,6 +374,32 @@
         .github-heatmap:hover img { opacity: 1; }
 
         /* ==========================================
+           ACHIEVEMENTS / CERTIFICATIONS (new)
+           ========================================== */
+        .achieve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .achieve-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); padding: 2rem;
+            border-radius: 15px; transition: var(--transition); position: relative; overflow: hidden;
+        }
+        .achieve-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(255, 255, 255, 0.05); }
+        .achieve-card .achieve-year { font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; display: block; }
+        .achieve-card h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .achieve-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+
+        /* ==========================================
+           TOAST NOTIFICATION (upgrade)
+           ========================================== */
+        .toast {
+            position: fixed; bottom: 40px; left: 50%; transform: translate(-50%, 30px);
+            background: rgba(10, 10, 15, 0.9); border: 1px solid var(--accent); border-radius: 12px;
+            padding: 1rem 1.8rem; color: var(--text-main); font-size: 0.9rem; z-index: 100000;
+            backdrop-filter: blur(10px); opacity: 0; visibility: hidden; transition: var(--transition);
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15); display: flex; align-items: center; gap: 0.8rem;
+        }
+        .toast.visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+        .toast svg { width: 20px; height: 20px; stroke: var(--accent); flex-shrink: 0; }
+
+        /* ==========================================
            CONTACT & FOOTER
            ========================================== */
         .contact-wrap { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; }
@@ -374,6 +437,8 @@
 </head>
 <body>
 
+    <a href="#home" class="skip-link">Skip to content</a>
+
     <div id="scroll-progress"></div>
 
     <div id="preloader">
@@ -395,6 +460,7 @@
             <li><a href="#resume" class="custom-hover nav-link-item" data-section="resume">Resume</a></li>
             <li><a href="#skills" class="custom-hover nav-link-item" data-section="skills">Capabilities</a></li>
             <li><a href="#github" class="custom-hover nav-link-item" data-section="github">GitHub</a></li>
+            <li><a href="#achievements" class="custom-hover nav-link-item" data-section="achievements">Awards</a></li>
         </ul>
         <a href="#contact" class="btn-magnetic custom-hover">Initialize Contact</a>
     </nav>
@@ -403,7 +469,7 @@
         <div class="container hero-content">
             <span class="hero-greeting gs-reveal">System Online // Identity Verified</span>
             <h1 class="hero-title gs-reveal">
-                Hi,I'am <span>KARUNYA</span>  AI Enthusiast
+                Hi,I'am <span>KARUNYA</span>  <span id="role-rotator">AI Enthusiast</span>
             </h1>
             <p class="hero-subtitle gs-reveal">
                 Pursuing BS in Applied AI & Data Science @ IIT Jodhpur. Architecting intelligent AI applications, decomposing complex datasets, and generating predictive models to synthesize real-world solutions.
@@ -437,9 +503,9 @@
                     <p>Operating out of IIT Jodhpur, my focus remains strictly on bridging the gap between deep machine learning theory and production-ready software deployments, utilizing robust frameworks like TensorFlow, PyTorch, and cloud-native MLOps environments.</p>
                     
                     <div class="about-stats">
-                        <div class="stat-item"><h4>8.75</h4><p>Academic CGPA</p></div>
-                        <div class="stat-item"><h4>15+</h4><p>Core Technologies</p></div>
-                        <div class="stat-item"><h4>04</h4><p>Deployed Systems</p></div>
+                        <div class="stat-item"><h4 data-count-to="8.75" data-decimals="2">0</h4><p>Academic CGPA</p></div>
+                        <div class="stat-item"><h4 data-count-to="15" data-suffix="+">0</h4><p>Core Technologies</p></div>
+                        <div class="stat-item"><h4 data-count-to="4" data-pad="2">00</h4><p>Deployed Systems</p></div>
                         <div class="stat-item"><h4>∞</h4><p>Lines of Data Analyzed</p></div>
                     </div>
                 </div>
@@ -458,8 +524,15 @@
                 <h2 class="section-title">PROJECTS</h2>
             </div>
 
-            <div class="projects-grid">
-                <div class="project-card gs-reveal tilt-card">
+            <div class="filter-tabs gs-reveal">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn" data-filter="vision">Computer Vision</button>
+                <button class="filter-btn" data-filter="analytics">Data Analytics</button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card gs-reveal tilt-card" data-category="ml">
                     <div class="project-year">2026</div>
                     <div class="project-content">
                         <h3 class="project-title">Pet Recommendation AI</h3>
@@ -484,7 +557,7 @@
                     </div>
                 </div>
 
-                <div class="project-card gs-reveal tilt-card">
+                <div class="project-card gs-reveal tilt-card" data-category="vision">
                     <div class="project-year">2025</div>
                     <div class="project-content">
                         <h3 class="project-title">Hand Gesture Recognition</h3>
@@ -503,7 +576,7 @@
                     </div>
                 </div>
 
-                <div class="project-card gs-reveal tilt-card">
+                <div class="project-card gs-reveal tilt-card" data-category="analytics">
                     <div class="project-year">2025</div>
                     <div class="project-content">
                         <h3 class="project-title">VidyaVerse ROI Analytics</h3>
@@ -528,7 +601,7 @@
                     </div>
                 </div>
                 
-                <div class="project-card gs-reveal tilt-card">
+                <div class="project-card gs-reveal tilt-card" data-category="analytics">
                     <div class="project-year">2026</div>
                     <div class="project-content">
                         <h3 class="project-title">Data Analytics Dashboard</h3>
@@ -810,10 +883,41 @@
         </div>
     </section>
 
-    <section class="section" id="contact">
+    <section class="section" id="achievements">
         <div class="container">
             <div class="section-header gs-reveal">
                 <span class="section-num">07</span>
+                <h2 class="section-title">Recognition Log</h2>
+            </div>
+
+            <p class="gs-reveal" style="color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; font-size: 1.1rem; line-height: 1.6;">
+                Certifications, competitions, and milestones — swap these placeholders for your real credentials.
+            </p>
+
+            <div class="achieve-grid">
+                <div class="achieve-card gs-reveal tilt-card">
+                    <span class="achieve-year">Add Year</span>
+                    <h4>Certification / Course Name</h4>
+                    <p>Issuing platform or organization — replace with your actual certification.</p>
+                </div>
+                <div class="achieve-card gs-reveal tilt-card">
+                    <span class="achieve-year">Add Year</span>
+                    <h4>Hackathon / Competition</h4>
+                    <p>Event name and placement — replace with your actual result.</p>
+                </div>
+                <div class="achieve-card gs-reveal tilt-card">
+                    <span class="achieve-year">Add Year</span>
+                    <h4>Award / Recognition</h4>
+                    <p>Awarding body and context — replace with your actual achievement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-header gs-reveal">
+                <span class="section-num">08</span>
                 <h2 class="section-title">Secure Uplink</h2>
             </div>
 
@@ -869,6 +973,11 @@
 
     <div class="back-to-top custom-hover" id="backToTop">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    </div>
+
+    <div class="toast" id="toast">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span id="toastMessage">Message queued</span>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
@@ -1010,10 +1119,80 @@
         // 8. CONTACT FORM (client-side feedback only — hook up a real endpoint to actually send)
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('formStatus');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        function showToast(msg) {
+            toastMessage.textContent = msg;
+            toast.classList.add('visible');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('visible'), 4000);
+        }
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             formStatus.textContent = 'Transmission queued — connect a form backend (e.g. Formspree) to deliver it.';
+            showToast('Message queued — connect a form backend to deliver it');
             contactForm.reset();
+        });
+
+        // 9. HERO ROLE ROTATOR
+        const roleEl = document.getElementById('role-rotator');
+        const roles = ['AI Enthusiast', 'Data Scientist', 'ML Engineer', 'GenAI Builder'];
+        let roleIndex = 0;
+        if (roleEl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setInterval(() => {
+                roleIndex = (roleIndex + 1) % roles.length;
+                gsap.to(roleEl, {
+                    opacity: 0, y: -10, duration: 0.4, ease: 'power2.in', onComplete: () => {
+                        roleEl.textContent = roles[roleIndex];
+                        gsap.fromTo(roleEl, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+                    }
+                });
+            }, 2800);
+        }
+
+        // 10. ANIMATED STAT COUNTERS
+        const statEls = document.querySelectorAll('[data-count-to]');
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseFloat(el.dataset.countTo);
+                    const decimals = parseInt(el.dataset.decimals || '0', 10);
+                    const suffix = el.dataset.suffix || '';
+                    const pad = el.dataset.pad ? parseInt(el.dataset.pad, 10) : 0;
+                    const obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: target, duration: 1.8, ease: 'power2.out',
+                        onUpdate: () => {
+                            let display = decimals > 0 ? obj.val.toFixed(decimals) : Math.round(obj.val).toString();
+                            if (pad) display = display.padStart(pad, '0');
+                            el.textContent = display + suffix;
+                        }
+                    });
+                    statObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        statEls.forEach(el => statObserver.observe(el));
+
+        // 11. PROJECT FILTER TABS
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('#projectsGrid .project-card');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                projectCards.forEach(card => {
+                    const show = filter === 'all' || card.dataset.category === filter;
+                    if (show) {
+                        card.classList.remove('hidden-card');
+                        gsap.fromTo(card, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+                    } else {
+                        card.classList.add('hidden-card');
+                    }
+                });
+            });
         });
 
         // 9. THREE.JS PARTICLE UNIVERSE BACKGROUND
