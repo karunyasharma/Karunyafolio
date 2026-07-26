@@ -57,6 +57,30 @@
         .container { max-width: var(--container-width); margin: 0 auto; padding: 0 5%; }
 
         /* ==========================================
+           SCROLL PROGRESS BAR (upgrade)
+           ========================================== */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            z-index: 100000; box-shadow: 0 0 10px var(--accent-glow);
+            transition: width 0.05s linear;
+        }
+
+        /* ==========================================
+           BACK TO TOP (upgrade)
+           ========================================== */
+        .back-to-top {
+            position: fixed; bottom: 40px; right: 40px; width: 56px; height: 56px;
+            border-radius: 50%; background: rgba(25, 25, 35, 0.5); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center;
+            z-index: 500; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: var(--transition);
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); transform: translateY(-5px); }
+        .back-to-top svg { width: 22px; height: 22px; stroke: var(--accent); }
+
+        /* ==========================================
            SYSTEM PRELOADER
            ========================================== */
         #preloader {
@@ -115,11 +139,12 @@
         .logo span { color: var(--accent); }
         .nav-links { display: flex; gap: 2.5rem; }
         .nav-links li a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; position: relative; overflow: hidden; display: inline-block; }
+        .nav-links li a.active-link { color: var(--accent); }
         .nav-links li a::after {
             content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 1px;
             background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .nav-links li a:hover::after { transform: scaleX(1); transform-origin: left; }
+        .nav-links li a:hover::after, .nav-links li a.active-link::after { transform: scaleX(1); transform-origin: left; }
 
         .btn-magnetic {
             display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem;
@@ -144,6 +169,14 @@
         .hero-title { font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; font-weight: 800; text-transform: uppercase; margin-bottom: 2rem; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); position: relative; }
         .hero-title span { color: var(--text-main); -webkit-text-stroke: 0; display: block; }
         .hero-subtitle { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); max-width: 600px; line-height: 1.6; }
+        .hero-actions { display: flex; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
+        .btn-outline-small {
+            display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1.8rem;
+            border: 1px solid var(--glass-border); border-radius: 100px; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px; color: var(--text-main); transition: var(--transition);
+        }
+        .btn-outline-small:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+        .btn-outline-small svg { width: 16px; height: 16px; }
 
         .scroll-indicator {
             position: absolute; bottom: 50px; left: 5%; display: flex; align-items: center; gap: 1rem;
@@ -216,6 +249,42 @@
         .degree-title { color: var(--accent); margin-bottom: 1rem; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.1rem; }
 
         /* ==========================================
+           RESUME 3D FLIP SECTION (new)
+           ========================================== */
+        .resume-wrap { display: flex; justify-content: center; }
+        .flip-card {
+            perspective: 2000px; width: 100%; max-width: 700px; min-height: 460px; cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; min-height: 460px;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden;
+            -webkit-backface-visibility: hidden; border-radius: 24px; padding: 3rem;
+            background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .flip-card-front:hover, .flip-card-back:hover { border-color: var(--accent); box-shadow: 0 0 40px rgba(0, 240, 255, 0.12); }
+        .flip-card-back { transform: rotateY(180deg); justify-content: flex-start; align-items: flex-start; text-align: left; }
+        .resume-icon { width: 70px; height: 70px; stroke: var(--accent); margin-bottom: 2rem; }
+        .flip-card-front h3 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .flip-card-front p { color: var(--text-muted); max-width: 400px; margin-bottom: 2rem; line-height: 1.6; }
+        .flip-hint { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 0.6rem; }
+        .flip-hint svg { width: 16px; height: 16px; animation: rotateHint 3s linear infinite; }
+        @keyframes rotateHint { 0%, 100% { transform: rotateY(0deg); } 50% { transform: rotateY(180deg); } }
+
+        .flip-card-back h3 { font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--accent); }
+        .resume-highlights { list-style: none; margin-bottom: 2rem; width: 100%; }
+        .resume-highlights li {
+            display: flex; justify-content: space-between; padding: 0.9rem 0; border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem; color: var(--text-muted);
+        }
+        .resume-highlights li strong { color: var(--text-main); font-weight: 500; }
+        .resume-back-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: auto; width: 100%; }
+
+        /* ==========================================
            SKILLS MARQUEE & DETAILED CARDS
            ========================================== */
         .marquee-container {
@@ -284,6 +353,8 @@
         .input-group label { position: absolute; top: 1rem; left: 0; color: var(--text-muted); pointer-events: none; transition: var(--transition); }
         .input-group input:focus ~ label, .input-group input:valid ~ label, .input-group textarea:focus ~ label, .input-group textarea:valid ~ label { top: -1.5rem; font-size: 0.8rem; color: var(--accent); }
 
+        .form-status { margin-top: 1.2rem; font-size: 0.85rem; color: var(--accent); min-height: 1.2em; letter-spacing: 1px; text-transform: uppercase; }
+
         footer { padding: 2rem 5%; text-align: center; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.9rem; margin-top: 100px; }
 
         @media (max-width: 1024px) {
@@ -296,10 +367,14 @@
             .nav-links { display: none; }
             .section { padding: 100px 0; }
             .project-card, .tilt-card { transform: none !important; }
+            .back-to-top { right: 20px; bottom: 20px; width: 48px; height: 48px; }
+            .flip-card-front, .flip-card-back { padding: 2rem; }
         }
     </style>
 </head>
 <body>
+
+    <div id="scroll-progress"></div>
 
     <div id="preloader">
         <div class="loader-ring"></div>
@@ -314,11 +389,12 @@
     <nav id="navbar">
         <a href="#" class="logo custom-hover">KARUNYAFOLIO<span>.</span></a>
         <ul class="nav-links">
-            <li><a href="#about" class="custom-hover">Profile</a></li>
-            <li><a href="#projects" class="custom-hover">Systems</a></li>
-            <li><a href="#education" class="custom-hover">Chronology</a></li>
-            <li><a href="#skills" class="custom-hover">Capabilities</a></li>
-            <li><a href="#github" class="custom-hover">GitHub</a></li>
+            <li><a href="#about" class="custom-hover nav-link-item" data-section="about">Profile</a></li>
+            <li><a href="#projects" class="custom-hover nav-link-item" data-section="projects">Systems</a></li>
+            <li><a href="#education" class="custom-hover nav-link-item" data-section="education">Chronology</a></li>
+            <li><a href="#resume" class="custom-hover nav-link-item" data-section="resume">Resume</a></li>
+            <li><a href="#skills" class="custom-hover nav-link-item" data-section="skills">Capabilities</a></li>
+            <li><a href="#github" class="custom-hover nav-link-item" data-section="github">GitHub</a></li>
         </ul>
         <a href="#contact" class="btn-magnetic custom-hover">Initialize Contact</a>
     </nav>
@@ -332,6 +408,15 @@
             <p class="hero-subtitle gs-reveal">
                 Pursuing BS in Applied AI & Data Science @ IIT Jodhpur. Architecting intelligent AI applications, decomposing complex datasets, and generating predictive models to synthesize real-world solutions.
             </p>
+            <div class="hero-actions gs-reveal">
+                <a href="#resume" class="btn-magnetic custom-hover">
+                    View Resume
+                </a>
+                <a href="resume.pdf" download class="btn-outline-small custom-hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download PDF
+                </a>
+            </div>
         </div>
         <div class="scroll-indicator">
             <span>Scroll to explore</span>
@@ -518,6 +603,54 @@
         </div>
     </section>
 
+    <section class="section" id="resume">
+        <div class="container">
+            <div class="section-header gs-reveal">
+                <span class="section-num">04</span>
+                <h2 class="section-title">Resume Module</h2>
+            </div>
+
+            <p class="gs-reveal" style="color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; font-size: 1.1rem; line-height: 1.6;">
+                Click the card to flip it and access the full transmission — or download the raw file directly.
+            </p>
+
+            <div class="resume-wrap gs-reveal">
+                <div class="flip-card" id="resumeFlipCard">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <svg class="resume-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="9" y1="13" x2="15" y2="13"></line>
+                                <line x1="9" y1="17" x2="15" y2="17"></line>
+                            </svg>
+                            <h3>Karunya_Sharma_Resume</h3>
+                            <p>A condensed data-packet covering academic record, projects, and core technical capabilities. Flip the card to preview the highlights.</p>
+                            <span class="flip-hint">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                Click to flip
+                            </span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Quick Preview</h3>
+                            <ul class="resume-highlights">
+                                <li><span>Education</span><strong>B.S. Applied AI & Data Science, IIT Jodhpur</strong></li>
+                                <li><span>CGPA</span><strong>8.75</strong></li>
+                                <li><span>Core Stack</span><strong>Python, TensorFlow, PyTorch</strong></li>
+                                <li><span>Focus Areas</span><strong>ML, NLP, Data Analytics</strong></li>
+                                <li><span>Projects Shipped</span><strong>04</strong></li>
+                            </ul>
+                            <div class="resume-back-actions">
+                                <a href="resume.pdf" download class="btn-magnetic custom-hover" onclick="event.stopPropagation()">Download Resume</a>
+                                <a href="resume.pdf" target="_blank" class="btn-outline-small custom-hover" onclick="event.stopPropagation()">Open Full View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section" id="skills" style="padding-top: 0;">
         <div class="marquee-container" style="margin-bottom: 100px;">
             <div class="marquee">
@@ -546,7 +679,7 @@
 
         <div class="container">
             <div class="section-header gs-reveal">
-                <span class="section-num">04</span>
+                <span class="section-num">05</span>
                 <h2 class="section-title">Neural Capabilities</h2>
             </div>
             
@@ -632,7 +765,7 @@
     <section class="section" id="github">
         <div class="container">
             <div class="section-header gs-reveal">
-                <span class="section-num">05</span>
+                <span class="section-num">06</span>
                 <h2 class="section-title">GitHub Analytics</h2>
             </div>
             
@@ -680,7 +813,7 @@
     <section class="section" id="contact">
         <div class="container">
             <div class="section-header gs-reveal">
-                <span class="section-num">06</span>
+                <span class="section-num">07</span>
                 <h2 class="section-title">Secure Uplink</h2>
             </div>
 
@@ -699,11 +832,14 @@
                         <a href="https://linkedin.com/in/karunyasharma" target="_blank" class="social-link custom-hover">
                             LinkedIn Network <span>→</span>
                         </a>
+                        <a href="resume.pdf" download class="social-link custom-hover">
+                            Download Resume <span>→</span>
+                        </a>
                     </div>
                 </div>
 
                 <div class="contact-form gs-reveal">
-                    <form action="#" method="POST">
+                    <form id="contactForm" action="#" method="POST">
                         <div class="input-group">
                             <input type="text" id="name" required autocomplete="off">
                             <label for="name">Operator ID / Name</label>
@@ -717,6 +853,7 @@
                             <label for="message">Transmission Data (Message)</label>
                         </div>
                         <button type="submit" class="btn-magnetic custom-hover" style="width: 100%; margin-top: 1rem;">Deploy Transmission</button>
+                        <div class="form-status" id="formStatus"></div>
                     </form>
                 </div>
             </div>
@@ -729,6 +866,10 @@
             <p style="margin-top: 10px;">&copy; 2026 Karunya Sharma. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <div class="back-to-top custom-hover" id="backToTop">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -786,6 +927,7 @@
         tl.fromTo('.hero-greeting', {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.5})
           .fromTo('.hero-title', {y: 50, opacity: 0, rotationX: 10}, {y: 0, opacity: 1, rotationX: 0, duration: 1.2, ease: 'power4.out'}, "-=0.6")
           .fromTo('.hero-subtitle', {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 1, ease: 'power3.out'}, "-=0.8")
+          .fromTo('.hero-actions', {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 1, ease: 'power3.out'}, "-=0.6")
           .fromTo('.scroll-indicator', {opacity: 0}, {opacity: 1, duration: 1}, "-=0.5");
 
         document.querySelectorAll('.gs-reveal').forEach((elem) => {
@@ -812,7 +954,69 @@
             card.addEventListener('mouseleave', () => { card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; });
         });
 
-        // 4. THREE.JS PARTICLE UNIVERSE BACKGROUND
+        // 4. RESUME 3D FLIP CARD
+        const resumeFlipCard = document.getElementById('resumeFlipCard');
+        resumeFlipCard.addEventListener('click', () => {
+            resumeFlipCard.classList.toggle('flipped');
+        });
+        // subtle tilt while flipped/unflipped, on top of the flip rotation
+        resumeFlipCard.addEventListener('mousemove', (e) => {
+            const rect = resumeFlipCard.getBoundingClientRect();
+            const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+            const rotateX = ((y - (rect.height / 2)) / (rect.height / 2)) * -6;
+            const rotateY = ((x - (rect.width / 2)) / (rect.width / 2)) * 6;
+            const baseY = resumeFlipCard.classList.contains('flipped') ? 180 : 0;
+            resumeFlipCard.querySelector('.flip-card-inner').style.transform = `rotateX(${rotateX}deg) rotateY(${baseY + rotateY}deg)`;
+        });
+        resumeFlipCard.addEventListener('mouseleave', () => {
+            const baseY = resumeFlipCard.classList.contains('flipped') ? 180 : 0;
+            resumeFlipCard.querySelector('.flip-card-inner').style.transform = `rotateX(0deg) rotateY(${baseY}deg)`;
+        });
+
+        // 5. SCROLL PROGRESS BAR
+        const scrollProgress = document.getElementById('scroll-progress');
+        function updateScrollProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            scrollProgress.style.width = pct + '%';
+        }
+        window.addEventListener('scroll', updateScrollProgress);
+        lenis.on('scroll', updateScrollProgress);
+
+        // 6. BACK TO TOP BUTTON
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        backToTop.addEventListener('click', () => { lenis.scrollTo(0, { duration: 1.5 }); });
+
+        // 7. ACTIVE NAV LINK ON SCROLL
+        const navSections = document.querySelectorAll('.section, .hero');
+        const navLinkItems = document.querySelectorAll('.nav-link-item');
+        function updateActiveNav() {
+            let current = '';
+            navSections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) current = sec.id;
+            });
+            navLinkItems.forEach(link => {
+                link.classList.toggle('active-link', link.dataset.section === current);
+            });
+        }
+        window.addEventListener('scroll', updateActiveNav);
+        lenis.on('scroll', updateActiveNav);
+
+        // 8. CONTACT FORM (client-side feedback only — hook up a real endpoint to actually send)
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formStatus.textContent = 'Transmission queued — connect a form backend (e.g. Formspree) to deliver it.';
+            contactForm.reset();
+        });
+
+        // 9. THREE.JS PARTICLE UNIVERSE BACKGROUND
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x030305, 0.001);
