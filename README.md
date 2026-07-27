@@ -1,68 +1,225 @@
-# Secure Uplink — Contact Form Backend
+<div align="center">
 
-A small Express server that receives your portfolio's contact form
-submissions and emails them to you. This replaces the placeholder
-"queued" message in the frontend with a real send.
+# 🚀 Karunyafolio
 
-## 1. Install
+### AI • Machine Learning • Data Science • Web Development
 
-```bash
-cd backend
-npm install
+<img src="portfolio-preview.gif" alt="Portfolio Preview" width="100%"/>
+
+![GitHub last commit](https://img.shields.io/github/last-commit/karunyasharma/Karunyafolio?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/karunyasharma/Karunyafolio?style=for-the-badge)
+![GitHub stars](https://img.shields.io/github/stars/karunyasharma/Karunyafolio?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/karunyasharma/Karunyafolio?style=for-the-badge)
+
+</div>
+
+---
+
+# 🌐 Live Demo
+
+🔗 **Website:** https://your-portfolio.vercel.app
+
+---
+
+# 📖 About
+
+Welcome to my personal portfolio.
+
+This website showcases my journey in **Artificial Intelligence, Machine Learning, Data Science, and Web Development**.
+
+Here you'll find my projects, technical skills, education, certifications, and ways to connect with me.
+
+---
+
+# ✨ Features
+
+- 🚀 Modern UI/UX
+- 🌙 Dark Theme
+- 🎨 Glassmorphism Design
+- ⚡ Smooth Animations
+- 📱 Responsive Layout
+- 💻 Interactive Project Cards
+- 📊 GitHub Analytics
+- 📬 Contact Section
+- 🎥 Portfolio Preview GIF
+
+---
+
+# 🛠 Tech Stack
+
+### Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+### Libraries
+
+- GSAP
+- Three.js
+- Lenis
+
+### AI & Data Science
+
+- Python
+- TensorFlow
+- PyTorch
+- Scikit-learn
+- Pandas
+- NumPy
+- OpenCV
+
+### Data Visualization
+
+- Power BI
+- Tableau
+- Excel
+
+---
+
+# 📂 Folder Structure
+
+```text
+Karunyafolio/
+│
+├── README.md
+├── index.html
+├── profile.png
+├── portfolio-preview.gif
+├── google381e2e7bf12ea92f.html
 ```
 
-## 2. Configure
+---
 
-```bash
-cp .env.example .env
-```
+# 🚀 Featured Projects
 
-Then edit `.env`:
-- `SMTP_USER` / `SMTP_PASS` — your email + an **App Password** (for Gmail:
-  turn on 2-Step Verification, then generate one at
-  https://myaccount.google.com/apppasswords). Never use your real password here.
-- `RECEIVING_EMAIL` — where you want messages delivered
-  (defaults to `karunyasharma60@gmail.com`).
-- `ALLOWED_ORIGIN` — set this to your live site's URL once deployed
-  (e.g. `https://karunyasharma.dev`). Leave as `*` only while testing locally.
+## 🐶 Pet Recommendation AI
 
-## 3. Run it
+Rule-Based Expert System using Forward Chaining.
 
-```bash
-npm start
-```
+**Tech Stack**
 
-You should see:
-```
-Secure Uplink backend running on http://localhost:5000
-```
+- Python
+- Symbolic AI
+- Expert System
 
-Test it's alive: open `http://localhost:5000/api/health` — should return `{"status":"ok"}`.
+---
 
-## 4. Point the frontend at it
+## ✋ Hand Gesture Recognition
 
-In `portfolio.html`, the contact form JS calls a `BACKEND_URL` constant.
-Set it to:
-- `http://localhost:5000/api/contact` while developing locally
-- your deployed backend URL once it's hosted (e.g. Render, Railway, Fly.io)
-  + `/api/contact`
+Real-time hand gesture recognition using Deep Learning.
 
-## 5. Deploy
+**Tech Stack**
 
-This is a plain Node/Express app — it runs anywhere Node runs. Free-tier
-friendly options: **Render**, **Railway**, or **Fly.io**. Whichever you pick:
-1. Push this `backend/` folder to its own repo (or a subfolder of your main repo).
-2. Set the same environment variables from `.env` in the host's dashboard —
-   never upload your `.env` file itself.
-3. Update `ALLOWED_ORIGIN` to your real portfolio domain so only your site
-   can call this API.
-4. Update `BACKEND_URL` in `portfolio.html` to the deployed URL.
+- TensorFlow
+- OpenCV
+- Python
 
-## Built-in protections
-- **Rate limiting** — max 5 submissions per 15 minutes per IP.
-- **Honeypot field** — a hidden `website` field catches simple bots
-  (real visitors never fill it in; the frontend already omits it, so add
-  it if you want bot protection — see note in `server.js`).
-- **Input validation** — requires name/email/message and checks email format.
-- **CORS lock-down** — only your configured origin can call the API once
-  you set `ALLOWED_ORIGIN`.
+---
+
+## 📊 VidyaVerse ROI Analytics
+
+Marketing ROI Dashboard using Power BI.
+
+**Tech Stack**
+
+- Power BI
+- Pandas
+- Excel
+
+---
+
+## 📈 Data Analytics Dashboard
+
+Interactive Business Dashboard.
+
+**Tech Stack**
+
+- SQL
+- Tableau
+- Power BI
+
+---
+
+# 💻 Skills
+
+- Artificial Intelligence
+- Machine Learning
+- Deep Learning
+- Data Science
+- Data Analytics
+- Computer Vision
+- Python
+- SQL
+- Power BI
+- Tableau
+- Git
+- GitHub
+
+---
+
+# 📷 Preview
+
+<img src="portfolio-preview.gif" width="100%">
+
+---
+
+# 📊 GitHub Stats
+
+<p align="center">
+
+<img src="https://github-readme-stats.vercel.app/api?username=karunyasharma&show_icons=true&theme=tokyonight"/>
+
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=karunyasharma&layout=compact&theme=tokyonight"/>
+
+<img src="https://streak-stats.demolab.com?user=karunyasharma&theme=tokyonight"/>
+
+</p>
+
+---
+
+# 📬 Connect with Me
+
+<p align="center">
+
+<a href="https://github.com/karunyasharma">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github">
+</a>
+
+<a href="https://linkedin.com/in/karunyasharma">
+<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin">
+</a>
+
+<a href="mailto:karunyasharma60@gmail.com">
+<img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail">
+</a>
+
+</p>
+
+---
+
+# ⭐ Support
+
+If you like this project,
+
+⭐ Star this repository
+
+🍴 Fork it
+
+📢 Share it with others
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+<div align="center">
+
+### ⭐ Thanks for visiting my portfolio!
+
+Made with ❤️ by **Karunya Sharma**
+
+</div>
