@@ -1,180 +1,68 @@
-#  Karunya Sharma - AI & Data Science Portfolio
+# Secure Uplink — Contact Form Backend
 
-## 🎥 Portfolio Demo
-🎬 Watch a quick walkthrough of my AI & Data Science portfolio.
-<p align="center">
-  <img src="portfolio-preview.gif" alt="Portfolio Preview" width="100%">
-</p>
+A small Express server that receives your portfolio's contact form
+submissions and emails them to you. This replaces the placeholder
+"queued" message in the frontend with a real send.
 
-> 
+## 1. Install
 
-## 👋 About Me
-
-Hi, I'm **Karunya Sharma**.
-
-I'm currently pursuing a **Bachelor of Science in Applied AI & Data Science** at **IIT Jodhpur**.
-
-I enjoy building intelligent applications using Artificial Intelligence, Machine Learning, Data Science, Computer Vision, and Generative AI. My goal is to create practical solutions that solve real-world problems.
-
----
-
-## 🌐 Live Demo
-
-🔗 Portfolio Website:
-https://karunyasharma.github.io/Karunyafolio/
----
-
-## ✨ Features
-
-- Modern futuristic UI
-- Responsive Design
-- Smooth GSAP Animations
-- Three.js Background
-- Custom Cursor
-- Glassmorphism Design
-- GitHub Analytics Section
-- Skills Showcase
-- Projects Timeline
-- Contact Section
-
----
-
-## 🛠 Tech Stack
-
-### Frontend
-- HTML5
-- CSS3
-- JavaScript
-
-### Libraries
-- GSAP
-- ScrollTrigger
-- Three.js
-- Lenis
-
-### AI & Data Science
-- Python
-- TensorFlow
-- PyTorch
-- Scikit-Learn
-- Pandas
-- NumPy
-- OpenCV
-- Power BI
-- Tableau
-
----
-
-## 📂 Project Structure
-
-```
-Karunyafolio/
-│
-├── README.md
-├── index.html
-├── portfolio-preview.gif
-├── profile.png
-├── google381e2e7bf12ea92f.html
+```bash
+cd backend
+npm install
 ```
 
----
+## 2. Configure
 
-## 🚀 Featured Projects
+```bash
+cp .env.example .env
+```
 
-### 🐶 Pet Recommendation AI
-Rule-based Expert System using Forward Chaining.
+Then edit `.env`:
+- `SMTP_USER` / `SMTP_PASS` — your email + an **App Password** (for Gmail:
+  turn on 2-Step Verification, then generate one at
+  https://myaccount.google.com/apppasswords). Never use your real password here.
+- `RECEIVING_EMAIL` — where you want messages delivered
+  (defaults to `karunyasharma60@gmail.com`).
+- `ALLOWED_ORIGIN` — set this to your live site's URL once deployed
+  (e.g. `https://karunyasharma.dev`). Leave as `*` only while testing locally.
 
-**Tech**
-- Python
-- Symbolic AI
-- Rule-Based System
+## 3. Run it
 
----
+```bash
+npm start
+```
 
-### ✋ Hand Gesture Recognition
+You should see:
+```
+Secure Uplink backend running on http://localhost:5000
+```
 
-Real-time hand gesture detection using Deep Learning.
+Test it's alive: open `http://localhost:5000/api/health` — should return `{"status":"ok"}`.
 
-**Tech**
-- TensorFlow
-- OpenCV
-- Python
+## 4. Point the frontend at it
 
----
+In `portfolio.html`, the contact form JS calls a `BACKEND_URL` constant.
+Set it to:
+- `http://localhost:5000/api/contact` while developing locally
+- your deployed backend URL once it's hosted (e.g. Render, Railway, Fly.io)
+  + `/api/contact`
 
-### 📊 VidyaVerse ROI Analytics
+## 5. Deploy
 
-Marketing Analytics Dashboard for ROI Analysis.
+This is a plain Node/Express app — it runs anywhere Node runs. Free-tier
+friendly options: **Render**, **Railway**, or **Fly.io**. Whichever you pick:
+1. Push this `backend/` folder to its own repo (or a subfolder of your main repo).
+2. Set the same environment variables from `.env` in the host's dashboard —
+   never upload your `.env` file itself.
+3. Update `ALLOWED_ORIGIN` to your real portfolio domain so only your site
+   can call this API.
+4. Update `BACKEND_URL` in `portfolio.html` to the deployed URL.
 
-**Tech**
-- Power BI
-- Pandas
-- Excel
-
----
-
-### 📈 Data Analytics Dashboard
-
-Interactive Business Intelligence Dashboard.
-
-**Tech**
-- SQL
-- Tableau
-- Power BI
-
----
-
-## 💻 Skills
-
-- Artificial Intelligence
-- Machine Learning
-- Deep Learning
-- Computer Vision
-- Data Analytics
-- Python
-- SQL
-- TensorFlow
-- PyTorch
-- OpenCV
-- Pandas
-- NumPy
-- Power BI
-- Tableau
-- Git & GitHub
-
-
----
-
-## 📈 GitHub Stats
-
-![GitHub Streak](https://streak-stats.demolab.com?user=karunyasharma&theme=tokyonight)
-
----
-
-## 📬 Connect With Me
-
-- GitHub: https://github.com/karunyasharma
-- LinkedIn: https://linkedin.com/in/karunyasharma
-- Email: karunyasharma60@gmail.com
-
----
-
-## ⭐ Support
-
-If you like this project,
-
-⭐ Star this repository
-
-🍴 Fork it
-
-📢 Share it with others
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-Made with ❤️ by **Karunya Sharma**
+## Built-in protections
+- **Rate limiting** — max 5 submissions per 15 minutes per IP.
+- **Honeypot field** — a hidden `website` field catches simple bots
+  (real visitors never fill it in; the frontend already omits it, so add
+  it if you want bot protection — see note in `server.js`).
+- **Input validation** — requires name/email/message and checks email format.
+- **CORS lock-down** — only your configured origin can call the API once
+  you set `ALLOWED_ORIGIN`.
